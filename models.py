@@ -1,10 +1,11 @@
 from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DateTime, Date, Float
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+from db import session
 
-engine = create_engine('')
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
+# engine = create_engine('')
+# DBSession = sessionmaker(bind=engine)
+# session = DBSession()
 
 Base = declarative_base()
 
@@ -30,7 +31,7 @@ class Student(Base):
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now()) 
      group_id = Column(Integer, ForeignKey="stu_groups.id")
-     teachers = relationship("Student", secondary = 'teachers_to_student', back_populates = 'students')
+     # teachers = relationship("Student", secondary = 'teachers_to_student', back_populates = 'students')
 
 class Teacher(Base):
      __tablename__ = "teachers"
@@ -67,9 +68,8 @@ class Grade:
      subject_id = Column(Integer, ForeignKey="subjects.id")
 
 
-class TeacherStudent(Base):
-     __tablename__= "teachers_to_student"
-     id = Column(Integer, primary_key = True)
-     teacher_id = Column(Integer, ForeignKey="teachers.id")
-     student_id = Column(Integer, ForeignKey="students.id")
-
+# class TeacherStudent(Base):
+#      __tablename__= "teachers_to_student"
+#      id = Column(Integer, primary_key = True)
+#      teacher_id = Column(Integer, ForeignKey="teachers.id")
+#      student_id = Column(Integer, ForeignKey="students.id")

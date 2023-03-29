@@ -49,16 +49,22 @@ def random_date(date_start: datetime, date_end: datetime):
     result = choice(date_list)
     return result
 
+def insert_group():
+    pass
+
+
 def insert_students():
     for _ in range(100):
         student = Student(
             full_name = fake.name(),
+            age = fake.age(18, 25), 
             email = fake.email(), 
             phone = fake.phone_number(), 
             budget = randint(0, 1), 
             scholarship = randint(0, 1), 
-
-
+            created_at  = datetime.now()
+            last_update_at = datetime.now()
+            group_id = randint(1, 3)
         )
         session.add(student)
     session.commit()
@@ -69,8 +75,7 @@ def insert_teachers():
 def insert_subjects():
     pass
 
-def insert_group():
-    pass
+
 
 def insert_grades():
     pass
