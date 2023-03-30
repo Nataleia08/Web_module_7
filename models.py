@@ -1,7 +1,7 @@
-from sqlalchemy import create_engine, Column, Integer, String, ForeignKey, DateTime, Date, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Date, Float, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, relationship
-from db import session
+from sqlalchemy.orm import relationship
+from db import session, engine
 
 # engine = create_engine('')
 # DBSession = sessionmaker(bind=engine)
@@ -73,3 +73,6 @@ class Grade:
 #      id = Column(Integer, primary_key = True)
 #      teacher_id = Column(Integer, ForeignKey="teachers.id")
 #      student_id = Column(Integer, ForeignKey="students.id")
+
+Base.metadata.create_all(engine)
+Base.metadata.bind = engine
