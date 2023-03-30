@@ -47,7 +47,7 @@ class Teacher(Base):
      last_update_at = Column(DateTime, server_default=func.now()) 
 
 
-class Subject:
+class Subject(Base):
      __tablename__ = "subjects"
      id = Column(Integer, primary_key = True)
      title = Column(String(100))
@@ -56,7 +56,7 @@ class Subject:
      teacher_id = Column(Integer, ForeignKey="teachers.id")
 
 
-class Grade:
+class Grade(Base):
      __tablename__ = "grades"
      id = Column(Integer, primary_key = True)
      date_create = Column(Date)
