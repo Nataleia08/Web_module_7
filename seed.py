@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from sqlalchemy import SQLAlchemyError
 
 from db import session
-from models import Student, Teacher, TeacherStudent, Grade, Subject, StuGroup
+from models import Student, Teacher, Grade, Subject, StuGroup
 
 fake = Faker("uk-UA")
 
@@ -126,7 +126,7 @@ def insert_grades():
                 grade = choice(GRADE_LIST), 
                 number_grade = randint(30, 100), 
                 last_update_at = datetime.now(), 
-                teacher_id = choice(range(1, 5))
+                teacher_id = choice(range(1, 5)),
                 student_id = s+1, 
                 subject_id = randint(1, 7)
             )

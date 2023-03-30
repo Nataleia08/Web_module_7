@@ -8,6 +8,8 @@ parser.add_argument('--model', help='Command: StuGroup, Student, Teacher, Subjec
 parser.add_argument('--id')
 parser.add_argument('--title')
 parser.add_argument('--name')
+parser.add_argument('--group_number')
+parser.add_argument('--number_grade')
 
 arguments = parser.parse_args()
 my_arg = vars(arguments)
@@ -17,10 +19,62 @@ model = my_arg.get('model')
 id = my_arg.get('id')
 title = my_arg.get('title')
 name = my_arg.get('name')
+group_number = my_arg.get('group_number')
+number_grade = my_arg.get('number_grade')
 
 
 def main():
-    
+    match model:
+        case 'StuGroup':
+            match action:
+                case 'create':
+                    functions.create_group(group_number)
+                case 'list':
+                    functions.read_group(id)
+                case 'update':
+                    functions.update_group(id)
+                case 'remove':
+                    functions.delete_group(id)
+        case 'Student':
+            match action:
+                case 'create':
+                    functions.create_student(name)
+                case 'list':
+                    functions.read_student(id)
+                case 'update':
+                    functions.update_student(id)
+                case 'remove':
+                    functions.delete_student(id)
+        case 'Teacher':
+            match action:
+                case 'create':
+                    functions.create_teacher(name)
+                case 'list':
+                    functions.read_teacher(id)
+                case 'update':
+                    functions.update_teacher(id)
+                case 'remove':
+                    functions.delete_teatcher(id)
+        case 'Subject':
+            match action:
+                case 'create':
+                    functions.create_subject(title)
+                case 'list':
+                    functions.read_subject(id)
+                case 'update':
+                    functions.update_subject(id)
+                case 'remove':
+                    functions.delete_subject(id)
+        case 'Grade':
+            match action:
+                case 'create':
+                    functions.create_grade(number_grade)
+                case 'list':
+                    functions.read_grade(id)
+                case 'update':
+                    functions.update_grade(id)
+                case 'remove':
+                    functions.delete_grade(id)
 
 if __name__=="__main__":
     main()

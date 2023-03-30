@@ -1,3 +1,6 @@
+from db import session
+from models import Student, Teacher, Grade, Subject, StuGroup
+
 #-------------------Group------------------------
 
 def create_group():
