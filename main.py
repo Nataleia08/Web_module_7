@@ -32,7 +32,7 @@ def main():
                 case 'list':
                     functions.read_group(id)
                 case 'update':
-                    functions.update_group(id)
+                    functions.update_group(id, )
                 case 'remove':
                     functions.delete_group(id)
         case 'Student':
