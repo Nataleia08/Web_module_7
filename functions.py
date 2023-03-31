@@ -6,8 +6,8 @@ from sqlalchemy import func, all_
 
 def create_group(gr_number):
     try:
-        id_g = session.query(func.count(StuGroup.id)).select_from(StuGroup)+1
-        group = StuGroup(id= id_g, group_number= gr_number, kurs= 1, created_at= func.now(), last_update_at= func.now())
+        id_g = int(session.query(func.count(StuGroup.id)).select_from(StuGroup).scalar())+1
+        group = StuGroup(id = id_g, group_number= gr_number, kurs= 1, created_at= func.now(), last_update_at= func.now())
         session.add(group)
         session.commit()
     except MemoryError as Err:
@@ -15,7 +15,9 @@ def create_group(gr_number):
 
 def read_group():
     result = session.query(StuGroup).all()
-    print(result)
+    print("ID, Group number, kurs, daytime")
+    for g in result:
+        print(g.id, g.group_number, g.kurs, g.daytime)
 
 def update_group(id_g, gr_number):
     new_group = session.query(StuGroup).get(id_g)
@@ -26,7 +28,7 @@ def update_group(id_g, gr_number):
 def delete_group(id_g):
     new_group = session.query(StuGroup).get(id_g)
     session.delete(new_group)
-    session.comit()
+    session.commit()
 
 #----------------------Student---------------------
 
@@ -35,13 +37,15 @@ def create_student(name):
         id_s = session.query(func.count(Student.id)).select_from(Student)+1
         new_student = Student(id=id_s, full_name=name, created_at = func.now(), last_update_at = func.now())
         session.add(new_student)
-        session.comit()
+        session.commit()
     except TypeError as Err:
         print(Err)
 
 def read_student():
     result = session.query(Student).all()
-    print(result)
+    print("Id, Name, Age, Email, Phone")
+    for r in result:
+        print(r.id, r.full_name, r.age, r.email, r.phone)
 
 def update_student(id_s, name):
     new_student = session.query(Student).get(id_s)
@@ -52,22 +56,24 @@ def update_student(id_s, name):
 def delete_student(id_s):
     d_student = session.query(Student).get(id_s)
     session.delete(d_student)
-    session.comit()
+    session.commit()
 
 #----------------Teacher----------------------------
 
 def create_teacher(name):
     try:
-        id_s = session.query(func.count(Teacher.id)).select_from(Teacher) + 1
+        id_s = int(list(session.query(func.count(Teacher.id)).select_from(Teacher))[0]) + 1
         new_teacher = Teacher(id=id_s, full_name=name, created_at=func.now(), last_update_at=func.now())
         session.add(new_teacher)
-        session.comit()
+        session.commit()
     except TypeError as Err:
         print(Err)
 
 def read_teacher():
     result = session.query(Teacher).all()
-    print(result)
+    print("Id, Name, Age, Email, Phone")
+    for r in result:
+        print(r.id, r.full_name, r.age, r.email, r.phone)
 
 def update_teacher(id_t, name):
     new_teacher = session.query(Teacher).get(id_t)
@@ -78,7 +84,7 @@ def update_teacher(id_t, name):
 def delete_teatcher(id_t):
     d_teacher = session.query(Teacher).get(id_t)
     session.delete(d_teacher)
-    session.comit()
+    session.commit()
 
 #-----------------------------Subject-------------------------
 
@@ -87,13 +93,15 @@ def create_subject(title_s):
         id_s = session.query(func.count(Subject.id)).select_from(Subject) + 1
         new_subject = Subject(id=id_s, title=title_s, created_at=func.now(), last_update_at=func.now())
         session.add(new_subject)
-        session.comit()
+        session.commit()
     except TypeError as Err:
         print(Err)
 
 def read_subject():
     result = session.query(Subject).all()
-    print(result)
+    print("Id, Title")
+    for r in result:
+        print(r.id, r.title)
 
 def update_subject(id_s, title_s):
     new_subject = session.query(Subject).get(id_s)
@@ -104,23 +112,26 @@ def update_subject(id_s, title_s):
 def delete_subject(id_s):
     d_subject = session.query(Subject).get(id_s)
     session.delete(d_subject)
-    session.comit()
+    session.commit()
 
 
 #-------------------Grade---------------------------------
 
 def create_grade(number_g):
     try:
-        id_g = int(session.query(func.count(Grade.id)).select_from(Grade)) + 1
-        new_grade = Grade(id=id_g, number_grade=number_g, created_at=func.now(), last_update_at=func.now())
+        # id_g = int(session.query(func.count(Grade.id)).select_from(Grade)) + 1
+        new_grade = Grade(number_grade=number_g, date_create = func.now(), created_at=func.now(), last_update_at=func.now())
         session.add(new_grade)
-        session.comit()
+        session.commit()
     except TypeError as Err:
         print(Err)
 
 def read_grade():
-    result = session.query(Grade).all()
-    print(result)
+    result = session.query(Grade.id, Grade.number_grade, Grade.date_create, Student.full_name, Subject.title).\
+        select_from(Grade).join(Student).join(Subject).all()
+    print("Id, Grade, Number of grade, Date, Student, Subject")
+    for r in result:
+        print(r)
 
 def update_grade(id_g, number_g):
     new_grade = session.query(Grade).get(id_g)
@@ -131,4 +142,4 @@ def update_grade(id_g, number_g):
 def delete_grade(id_g):
     d_grade = session.query(Grade).get(id_g)
     session.delete(d_grade)
-    session.comit()
+    session.commit()

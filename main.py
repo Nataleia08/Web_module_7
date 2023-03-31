@@ -3,8 +3,8 @@ import functions
 
 
 parser = argparse.ArgumentParser(description="My hw7 APP")
-parser.add_argument('--action', help='Command: create, update, list, remove')
-parser.add_argument('--model', help='Command: StuGroup, Student, Teacher, Subject, Grade')
+parser.add_argument('-a', '--action', help='Command: create, update, list, remove')
+parser.add_argument('-m', '--model', help='Command: StuGroup, Student, Teacher, Subject, Grade')
 parser.add_argument('--id')
 parser.add_argument('--title')
 parser.add_argument('--name')
@@ -13,8 +13,7 @@ parser.add_argument('--number_grade')
 
 arguments = parser.parse_args()
 my_arg = vars(arguments)
-
-action = my_arg.get('actin')
+action = my_arg.get('action')
 model = my_arg.get('model')
 id = my_arg.get('id')
 title = my_arg.get('title')
@@ -77,4 +76,7 @@ def main():
                     functions.delete_grade(id)
 
 if __name__=="__main__":
-    main()
+    try:
+        main()
+    except ValueError as er:
+        print(er)
