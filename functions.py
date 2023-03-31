@@ -15,14 +15,19 @@ def create_group(gr_number):
 
 
 def read_group():
-    result = session.query(all_).select_from(StuGroup)
+    result = session.query(StuGroup).all()
     print(result)
 
 def update_group(id_g, gr_number):
-    pass
+    new_group = session.query(StuGroup).get(id_q)
+    new_group.group_number = gr_number
+    session.add(new_group)
+    session.commit()
 
 def delete_group():
-    pass
+    new_group = session.query(StuGroup).get(id_q)
+    session.delete()
+    session.comit()
 
 #----------------------Student---------------------
 
@@ -30,7 +35,7 @@ def create_student():
     pass
 
 def read_student():
-    result = session.query(all_).select_from(Student)
+    result = session.query(Student).all()
     print(result)
 
 def update_student():
@@ -45,7 +50,7 @@ def create_teacher():
     pass
 
 def read_teacher():
-    result = session.query(all_).select_from(Teacher)
+    result = session.query(Teacher).all()
     print(result)
 
 def update_teacher():
@@ -60,7 +65,7 @@ def create_subject():
     pass
 
 def read_subject():
-    result = session.query(all_).select_from(Subject)
+    result = session.query(Subject).all()
     print(result)
 
 def update_subject():
@@ -76,7 +81,7 @@ def create_grade():
     pass
 
 def read_grade():
-    result = session.query(all_).select_from(Grade)
+    result = session.query(Grade).all()
     print(result)
 
 def update_grade():
