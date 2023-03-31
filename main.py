@@ -30,9 +30,9 @@ def main():
                 case 'create':
                     functions.create_group(group_number)
                 case 'list':
-                    functions.read_group(id)
+                    functions.read_group()
                 case 'update':
-                    functions.update_group(id, )
+                    functions.update_group(id, group_number)
                 case 'remove':
                     functions.delete_group(id)
         case 'Student':
@@ -40,9 +40,9 @@ def main():
                 case 'create':
                     functions.create_student(name)
                 case 'list':
-                    functions.read_student(id)
+                    functions.read_student()
                 case 'update':
-                    functions.update_student(id)
+                    functions.update_student(id, name)
                 case 'remove':
                     functions.delete_student(id)
         case 'Teacher':
@@ -50,9 +50,9 @@ def main():
                 case 'create':
                     functions.create_teacher(name)
                 case 'list':
-                    functions.read_teacher(id)
+                    functions.read_teacher()
                 case 'update':
-                    functions.update_teacher(id)
+                    functions.update_teacher(id, name)
                 case 'remove':
                     functions.delete_teatcher(id)
         case 'Subject':
@@ -60,9 +60,9 @@ def main():
                 case 'create':
                     functions.create_subject(title)
                 case 'list':
-                    functions.read_subject(id)
+                    functions.read_subject()
                 case 'update':
-                    functions.update_subject(id)
+                    functions.update_subject(id, title)
                 case 'remove':
                     functions.delete_subject(id)
         case 'Grade':
@@ -70,7 +70,7 @@ def main():
                 case 'create':
                     functions.create_grade(number_grade)
                 case 'list':
-                    functions.read_grade(id)
+                    functions.read_grade()
                 case 'update':
                     functions.update_grade(id)
                 case 'remove':
