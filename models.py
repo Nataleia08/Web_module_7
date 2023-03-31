@@ -1,11 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Date, Float, func, Boolean
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
 from db import session, engine
 
-# engine = create_engine('')
-# DBSession = sessionmaker(bind=engine)
-# session = DBSession()
 
 Base = declarative_base()
 
@@ -30,7 +26,7 @@ class Student(Base):
      scholarship = Column(Boolean)
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now()) 
-     group_id = Column(Integer, ForeignKey="stu_groups.id")
+     group_id = Column(Integer, ForeignKey("stu_groups.id"))
      # teachers = relationship("Student", secondary = 'teachers_to_student', back_populates = 'students')
 
 class Teacher(Base):
@@ -53,7 +49,7 @@ class Subject(Base):
      title = Column(String(100))
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now())
-     teacher_id = Column(Integer, ForeignKey="teachers.id")
+     teacher_id = Column(Integer, ForeignKey("teachers.id"))
 
 
 class Grade(Base):
@@ -64,15 +60,9 @@ class Grade(Base):
      number_grade = Column(Integer)
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now())
-     student_id = Column(Integer, ForeignKey="students.id")
-     subject_id = Column(Integer, ForeignKey="subjects.id")
+     student_id = Column(Integer, ForeignKey("students.id"))
+     subject_id = Column(Integer, ForeignKey("subjects.id"))
 
-
-# class TeacherStudent(Base):
-#      __tablename__= "teachers_to_student"
-#      id = Column(Integer, primary_key = True)
-#      teacher_id = Column(Integer, ForeignKey="teachers.id")
-#      student_id = Column(Integer, ForeignKey="students.id")
 
 Base.metadata.create_all(engine)
 Base.metadata.bind = engine

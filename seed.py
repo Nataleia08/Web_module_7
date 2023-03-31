@@ -1,10 +1,10 @@
 from faker import Faker
 from random import randint, choice 
 from datetime import datetime, timedelta
-from psycopg2 import connect
-import random
-from contextlib import contextmanager
-from sqlalchemy import SQLAlchemyError
+# from psycopg2 import connect
+# import random
+# from contextlib import contextmanager
+from sqlalchemy.exc import SQLAlchemyError
 
 from db import session
 from models import Student, Teacher, Grade, Subject, StuGroup
@@ -70,7 +70,7 @@ def insert_students():
         student = Student (
             id = i, 
             full_name = fake.name(),
-            age = fake.age(18, 25), 
+            age = randint(18, 25),
             email = fake.email(), 
             phone = fake.phone_number(), 
             budget = randint(0, 1), 
@@ -125,8 +125,7 @@ def insert_grades():
                 date_create = random_date(datetime(year=2022, month=9, day=1), datetime(year=2023, month=3, day=24)), 
                 grade = choice(GRADE_LIST), 
                 number_grade = randint(30, 100), 
-                last_update_at = datetime.now(), 
-                teacher_id = choice(range(1, 5)),
+                last_update_at = datetime.now(),
                 student_id = s+1, 
                 subject_id = randint(1, 7)
             )
@@ -134,16 +133,13 @@ def insert_grades():
             j += 1
     session.commit()
 
-# def insert_links():
-#     pass
-
 
 if __name__ == "__main__":
     try:
-        insert_students()
         insert_group()
-        insert_subjects()
+        insert_students()
         insert_teachers()
+        insert_subjects()
         insert_grades()
     except SQLAlchemyError as err:
         print(err)

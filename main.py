@@ -72,7 +72,7 @@ def main():
                 case 'list':
                     functions.read_grade()
                 case 'update':
-                    functions.update_grade(id)
+                    functions.update_grade(id, number_grade)
                 case 'remove':
                     functions.delete_grade(id)
 
