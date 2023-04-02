@@ -6,10 +6,10 @@ parser = argparse.ArgumentParser(description="My hw7 APP")
 parser.add_argument('-a', '--action', help='Command: create, update, list, remove')
 parser.add_argument('-m', '--model', help='Command: StuGroup, Student, Teacher, Subject, Grade')
 parser.add_argument('--id')
-parser.add_argument('--title')
-parser.add_argument('--name')
-parser.add_argument('--group_number')
-parser.add_argument('--number_grade')
+parser.add_argument('-t', '--title')
+parser.add_argument('-n','--name')
+parser.add_argument('-gn', '--group_number')
+parser.add_argument('-gr', '--number_grade')
 
 arguments = parser.parse_args()
 my_arg = vars(arguments)
@@ -53,7 +53,7 @@ def main():
                 case 'update':
                     functions.update_teacher(id, name)
                 case 'remove':
-                    functions.delete_teatcher(id)
+                    functions.delete_teacher(id)
         case 'Subject':
             match action:
                 case 'create':
@@ -75,8 +75,8 @@ def main():
                 case 'remove':
                     functions.delete_grade(id)
 
-if __name__=="__main__":
+if __name__ == "__main__":
     try:
         main()
-    except ValueError as er:
-        print(er)
+    except AttributeError as er1:
+        print(er1)

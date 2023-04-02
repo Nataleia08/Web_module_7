@@ -1,13 +1,14 @@
 from db import session
 from models import Student, Teacher, Grade, Subject, StuGroup
-from sqlalchemy import func, all_
+from sqlalchemy import func
+from sqlalchemy import update
 
 #-------------------Group------------------------
 
 def create_group(gr_number):
     try:
-        id_g = int(session.query(func.count(StuGroup.id)).select_from(StuGroup).scalar())+1
-        group = StuGroup(id = id_g, group_number= gr_number, kurs= 1, created_at= func.now(), last_update_at= func.now())
+        id_g = int(list(session.query(func.count(StuGroup.id)).select_from(StuGroup).scalar())[0])+1
+        group = StuGroup(id=id_g, group_number=gr_number, kurs=1, created_at=func.now(), last_update_at=func.now())
         session.add(group)
         session.commit()
     except MemoryError as Err:
@@ -22,6 +23,7 @@ def read_group():
 def update_group(id_g, gr_number):
     new_group = session.query(StuGroup).get(id_g)
     new_group.group_number = gr_number
+    new_group.last_update_at = func.now()
     session.add(new_group)
     session.commit()
 
@@ -35,7 +37,7 @@ def delete_group(id_g):
 def create_student(name):
     try:
         id_s = session.query(func.count(Student.id)).select_from(Student)+1
-        new_student = Student(id=id_s, full_name=name, created_at = func.now(), last_update_at = func.now())
+        new_student = Student(id=id_s, full_name=name, created_at=func.now(), last_update_at=func.now())
         session.add(new_student)
         session.commit()
     except TypeError as Err:
@@ -50,6 +52,7 @@ def read_student():
 def update_student(id_s, name):
     new_student = session.query(Student).get(id_s)
     new_student.full_name = name
+    new_student.last_update_at = func.now()
     session.add(new_student)
     session.commit()
 
@@ -78,10 +81,11 @@ def read_teacher():
 def update_teacher(id_t, name):
     new_teacher = session.query(Teacher).get(id_t)
     new_teacher.full_name = name
+    new_teacher.last_update_at = func.now()
     session.add(new_teacher)
     session.commit()
 
-def delete_teatcher(id_t):
+def delete_teacher(id_t):
     d_teacher = session.query(Teacher).get(id_t)
     session.delete(d_teacher)
     session.commit()
@@ -106,6 +110,7 @@ def read_subject():
 def update_subject(id_s, title_s):
     new_subject = session.query(Subject).get(id_s)
     new_subject.title = title_s
+    new_subject.last_update_at = func.now()
     session.add(new_subject)
     session.commit()
 
@@ -136,6 +141,7 @@ def read_grade():
 def update_grade(id_g, number_g):
     new_grade = session.query(Grade).get(id_g)
     new_grade.number_grade = number_g
+    new_grade.last_update_at = func.now()
     session.add(new_grade)
     session.commit()
 

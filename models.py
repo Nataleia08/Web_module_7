@@ -21,13 +21,12 @@ class Student(Base):
      full_name = Column(String(150))
      age = Column(Integer)
      email = Column(String(100))
-     phone = Column(String(100), ) #UNIQUE NOT NULL
+     phone = Column(String(100))
      budget = Column(Boolean)
      scholarship = Column(Boolean)
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now()) 
-     group_id = Column(Integer, ForeignKey("stu_groups.id"))
-     # teachers = relationship("Student", secondary = 'teachers_to_student', back_populates = 'students')
+     group_id = Column(Integer, ForeignKey("stu_groups.id", onupdate="CASCADE",ondelete="SET NULL"))
 
 class Teacher(Base):
      __tablename__ = "teachers"
@@ -49,7 +48,8 @@ class Subject(Base):
      title = Column(String(100))
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now())
-     teacher_id = Column(Integer, ForeignKey("teachers.id"))
+     teacher_id = Column(Integer, ForeignKey("teachers.id", onupdate="CASCADE",ondelete="SET NULL"))
+
 
 
 class Grade(Base):
@@ -60,8 +60,8 @@ class Grade(Base):
      number_grade = Column(Integer)
      created_at = Column(DateTime, server_default=func.now())
      last_update_at = Column(DateTime, server_default=func.now())
-     student_id = Column(Integer, ForeignKey("students.id"))
-     subject_id = Column(Integer, ForeignKey("subjects.id"))
+     student_id = Column(Integer, ForeignKey("students.id", onupdate="CASCADE",ondelete="SET NULL"))
+     subject_id = Column(Integer, ForeignKey("subjects.id", onupdate="CASCADE",ondelete="SET NULL"))
 
 
 Base.metadata.create_all(engine)
