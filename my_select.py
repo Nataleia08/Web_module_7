@@ -2,6 +2,7 @@ from db import session
 from models import Student, Teacher, Grade, Subject, StuGroup
 from sqlalchemy import func, desc, distinct
 
+
 def select_1():
     """Знайти 5 студентів із найбільшим середнім балом з усіх предметів."""
     result = session.query(Student.full_name, func.round(func.avg(Grade.number_grade), 2).label('avg_grade'))\

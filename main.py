@@ -4,7 +4,7 @@ import functions
 
 parser = argparse.ArgumentParser(description="My hw7 APP")
 parser.add_argument('-a', '--action', help='Command: create, update, list, remove')
-parser.add_argument('-m', '--model', help='Command: StuGroup, Student, Teacher, Subject, Grade')
+parser.add_argument('-m', '--model', help='Command: Group, Student, Teacher, Subject, Grade')
 parser.add_argument('--id')
 parser.add_argument('-t', '--title')
 parser.add_argument('-n','--name')
@@ -24,7 +24,7 @@ number_grade = my_arg.get('number_grade')
 
 def main():
     match model:
-        case 'StuGroup':
+        case 'Group':
             match action:
                 case 'create':
                     functions.create_group(group_number)
