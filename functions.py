@@ -1,17 +1,17 @@
 from db import session
 from models import Student, Teacher, Grade, Subject, StuGroup
 from sqlalchemy import func
-from sqlalchemy import update
+from sqlalchemy.exc import IntegrityError
 
 #-------------------Group------------------------
 
 def create_group(gr_number):
     try:
-        id_g = int(list(session.query(func.count(StuGroup.id)).select_from(StuGroup).scalar())[0])+1
+        id_g = int(session.query(func.count(StuGroup.id)).select_from(StuGroup).scalar())+1
         group = StuGroup(id=id_g, group_number=gr_number, kurs=1, created_at=func.now(), last_update_at=func.now())
         session.add(group)
         session.commit()
-    except MemoryError as Err:
+    except IntegrityError as Err:
         print(Err)
 
 def read_group():
@@ -36,11 +36,11 @@ def delete_group(id_g):
 
 def create_student(name):
     try:
-        id_s = session.query(func.count(Student.id)).select_from(Student)+1
+        id_s = int(session.query(func.count(Student.id)).select_from(Student).scalar())+1
         new_student = Student(id=id_s, full_name=name, created_at=func.now(), last_update_at=func.now())
         session.add(new_student)
         session.commit()
-    except TypeError as Err:
+    except IntegrityError as Err:
         print(Err)
 
 def read_student():
@@ -65,11 +65,11 @@ def delete_student(id_s):
 
 def create_teacher(name):
     try:
-        id_s = int(list(session.query(func.count(Teacher.id)).select_from(Teacher))[0]) + 1
+        id_s = int(session.query(func.count(Teacher.id)).select_from(Teacher).scalar()) + 1
         new_teacher = Teacher(id=id_s, full_name=name, created_at=func.now(), last_update_at=func.now())
         session.add(new_teacher)
         session.commit()
-    except TypeError as Err:
+    except IntegrityError as Err:
         print(Err)
 
 def read_teacher():
@@ -94,11 +94,11 @@ def delete_teacher(id_t):
 
 def create_subject(title_s):
     try:
-        id_s = session.query(func.count(Subject.id)).select_from(Subject) + 1
+        id_s = int(session.query(func.count(Subject.id)).select_from(Subject).scalar()) + 1
         new_subject = Subject(id=id_s, title=title_s, created_at=func.now(), last_update_at=func.now())
         session.add(new_subject)
         session.commit()
-    except TypeError as Err:
+    except IntegrityError as Err:
         print(Err)
 
 def read_subject():
@@ -124,11 +124,11 @@ def delete_subject(id_s):
 
 def create_grade(number_g):
     try:
-        # id_g = int(session.query(func.count(Grade.id)).select_from(Grade)) + 1
-        new_grade = Grade(number_grade=number_g, date_create = func.now(), created_at=func.now(), last_update_at=func.now())
+        id_g = int(session.query(func.count(Grade.id)).select_from(Grade).scalar()) + 1
+        new_grade = Grade(id = id_g, number_grade=number_g, date_create = func.now(), created_at=func.now(), last_update_at=func.now())
         session.add(new_grade)
         session.commit()
-    except TypeError as Err:
+    except IntegrityError as Err:
         print(Err)
 
 def read_grade():
